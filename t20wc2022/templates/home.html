@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
 
 
-
-
 {% block content %}
-<h1>Heading</h1>
-<p>Paragraph</p>
+
+
+<h1>T20 Cricket</h1>
+<h3>World Cup Tipping</h3>
+<p class="text-center">Welcome to the unofficial T20 Cricket World Cup tipping platform</p>
+
+<!-- Carousel with the upcoming games -->
+
+
+{% if not request.user.is_authenticated %}
+<p class="text-center"><a class="" href="{% url 'login' %}">Login</a> to get started</p>
+{% endif %}
+
+
 {% endblock content %}
 
 
