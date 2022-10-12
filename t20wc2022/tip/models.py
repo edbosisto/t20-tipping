@@ -11,7 +11,7 @@ class Team(models.Model):
     eliminated = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.id}: {self.name}"
+        return {self.name}
 
 
 class Venue(models.Model):
@@ -19,7 +19,7 @@ class Venue(models.Model):
     city = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.id}: {self.stadium}"
+        return {self.stadium}
 
 
 class Match(models.Model):

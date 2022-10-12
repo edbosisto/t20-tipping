@@ -25,6 +25,10 @@ def account(request):
     return render(request, "login.html", {})
 
 
+def ladder(request):
+    return render(request, "ladder.html", {})
+
+
 def loginPage(request):
     return render(request, "login.html", {})
 
@@ -48,7 +52,7 @@ def matches(request):
 
 def teams(request):
     teams = TeamSerializer(TEAMS, many=True)
-    
+
     context = {"teams": teams}
     return render(request, "teams", context)
 
