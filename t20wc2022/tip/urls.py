@@ -11,5 +11,5 @@ urlpatterns = [
     path('register/', views.registerPage, name="register"),
     path('matches/', views.matches, name="matches"),
     path('teams/', views.teams, name="teams"),
-    path('tip/', views.tip, name="tip"),
+    path('tips/', views.tips, name="tips"),
 ]

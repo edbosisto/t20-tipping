@@ -17,6 +17,9 @@ TEAMS = Team.objects.all()
 def home(request):
     matches = MatchSerializer(MATCHES, many=True).data
 
+    # Get matches with dates == today for display on homepage OR get next match.
+    # Logic something like: Is datetime < now? show next item in list
+
     context = {"matches": matches}
     return render(request, "home.html", context)
 
@@ -57,5 +60,5 @@ def teams(request):
     return render(request, "teams.html", context)
 
 
-def tip(request):
-    return render(request, "tip.html", {})
+def tips(request):
+    return render(request, "tips.html", {})
