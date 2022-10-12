@@ -2,13 +2,23 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
+from .models import Team, Venue, Match
+from .serializers import TeamSerializer, VenueSerializer, MatchSerializer
+
 # Create your views here.
+
+MATCHES = Match.objects.all()
+VENUES = Venue.objects.all()
+TEAMS = Team.objects.all()
 
 
 ### HOMEPAGE ###
 
 def home(request):
-    return render(request, "home.html", {})
+    matches = MatchSerializer(MATCHES, many=True).data
+
+    context = {"matches": matches}
+    return render(request, "home.html", context)
 
 
 def account(request):
@@ -30,11 +40,17 @@ def registerPage(request):
 
 
 def matches(request):
-    return render(request, "matches.html", {})
+    matches = MatchSerializer(MATCHES, many=True).data
+
+    context = {"matches": matches}
+    return render(request, "matches.html", context)
 
 
 def teams(request):
-    return render(request, "teams", {})
+    teams = TeamSerializer(TEAMS, many=True)
+    
+    context = {"teams": teams}
+    return render(request, "teams", context)
 
 
 def tip(request):

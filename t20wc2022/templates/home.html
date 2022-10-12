@@ -3,12 +3,47 @@
 
 {% block content %}
 
-
 <h1>T20 Cricket</h1>
-<h3>World Cup Tipping</h3>
-<p class="text-center">Welcome to the unofficial T20 Cricket World Cup tipping platform</p>
+    <h3>World Cup Tipping</h3>
+        <p class="text-center">Welcome to the unofficial T20 Cricket World Cup tipping platform</p>
 
 <!-- Carousel with the upcoming games -->
+
+    {% load static %}
+
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        </div>
+
+        {% for match in matches %}
+
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static '/images/carousel-bg-500.png' %}" class="d-block w-100" alt="carousel-bg">
+                <div class="carousel-caption d-none d-md-block">
+                <h1>{{ match.team1 }} Vs {{ match.team2 }}</h1>
+                <h3>{{ match.when }}</h3>
+                <h5>{{ match.venue }}</h5>
+                </div>
+            </div>
+            </div>
+            
+        {% endfor %}
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+            </button>
+
+        
+
+    </div>
+
 
 
 {% if not request.user.is_authenticated %}
