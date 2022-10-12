@@ -23,12 +23,11 @@ class Venue(models.Model):
 
 
 class Match(models.Model):
-    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team1")
-    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team2")
-    local_time = models.TimeField()
-    date = models.DateField()
+    team1 = models.ForeignKey(Team, blank=True, null=True, on_delete=models.CASCADE, related_name="team1")
+    team2 = models.ForeignKey(Team, blank=True, null=True, on_delete=models.CASCADE, related_name="team2")
+    when = models.DateTimeField(blank=True, null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
     winner = models.ForeignKey(Team, blank=True, null=True, on_delete=models.CASCADE, related_name="winner")
 
     def __str__(self):
-        return f"{self.id}: {self.team1} vs {self.team2}"
+        return f"{self.id}: {self.team1} vs {self.team2} in {self.venue} at {self.when}"
