@@ -29,8 +29,8 @@ def registerPage(request):
     return render(request, "register.html", {})
 
 
-def schedule(request):
-    return render(request, "schedule.html", {})
+def matches(request):
+    return render(request, "matches.html", {})
 
 
 def teams(request):
