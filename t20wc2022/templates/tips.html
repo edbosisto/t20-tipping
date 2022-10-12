@@ -4,8 +4,25 @@
 Tips
 {% endblock title %}
 
-
 {% block content %}
 
-{% endblock content %}
+    {% for match in matches %}
+        <form class="form-control" action="{% url 'tips' %}" method="POST" id="tip-form">
+            {% csrf_token %}
+            
+            <label class="form-label" for="{{ match }}">Game {{ match.id }}: {{ match.team1 }} vs {{ match.team2 }}</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="{{ match.team1 }}">
+                    <label class="form-check-label" for="inlineRadio1">{{ match.team1 }}</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="{{ match.team2 }}">
+                    <label class="form-check-label" for="inlineRadio2">{{ match.team2 }}</label>
+                </div>
+            <button type="submit" class="btn btn-danger">Save</button>
+            
+        </form>
+    {% endfor %}
 
+
+{% endblock content %}

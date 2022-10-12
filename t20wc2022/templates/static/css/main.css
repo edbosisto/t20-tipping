@@ -44,6 +44,11 @@ html {
   #home-card {
     padding-top: 3rem;
   }
+
+  #tip-form {
+    max-width: 500px;
+    text-align: center;
+  }
   
   
   /* Footer */

@@ -95,4 +95,10 @@ def teams(request):
 
 
 def tips(request):
-    return render(request, "tips.html", {})
+    form = TipForm()
+    
+    context = {
+        "form": form,
+        "matches": MATCHES,
+    }
+    return render(request, "tips.html", context)
