@@ -54,7 +54,7 @@ def teams(request):
     teams = TeamSerializer(TEAMS, many=True)
 
     context = {"teams": teams}
-    return render(request, "teams", context)
+    return render(request, "teams.html", context)
 
 
 def tip(request):
