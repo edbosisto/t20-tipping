@@ -6,31 +6,49 @@
 <h1>T20 Cricket</h1>
     <h3>World Cup Tipping</h3>
 
-    {% load static %}
+    <!-- Login or Tip button -->
 
-    <!-- Next match card -->
-    <div id="home-card">
-        <div class="card mx-auto" style="width: 25rem;">
-            <img src="{% static '/images/card-next-match.png' %}" class="card-img-top" alt="Next match">
-            <div class="card-body">
-            <h5 class="card-title text-center">{{ team1 }} vs {{ team2 }}</h5>
-            <h6 class="card-text text-center">{{ date }} @ {{ time }}</h6>
-            <p class="card-text text-center">{{ venue }}</p>
+    <div id="home-button" class="container-flex">
+        <div class="row">
+            <div class="col text-center">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'tips' %}"><button class="btn btn-danger btn-lg">ENTER TIPS</button></a>
+                {% else %}
+                    <a href="{% url 'login' %}"><button class="btn btn-primary btn-lg">LOGIN</button></a>
+                {% endif %}
             </div>
         </div>
     </div>
 
-<div id="home-button" class="container-flex">
-    <div class="row">
-        <div class="col text-center">
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'tips' %}"><button class="btn btn-danger btn-lg">ENTER TIPS</button></a>
-            {% else %}
-                <a href="{% url 'login' %}"><button class="btn btn-primary btn-lg">LOGIN</button></a>
-            {% endif %}
+    {% load static %}
+    <!-- Today's or next match cards -->
+    {% if not match_today %}
+        <div id="home-card">
+            <div class="card mx-auto" style="width: 25rem;">
+                <img src="{% static '/images/next-match.png' %}" class="card-img-top" alt="Next match">
+                <div class="card-body">
+                <h5 class="card-title text-center">{{ match_next.team1 }} vs {{ match_next.team2 }}</h5>
+                <h6 class="card-text text-center">{{ match_next.when }} (UTC)</h6>
+                <p class="card-text text-center">{{ match_next.venue }}</p>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    {% else %}
+        {% for match in match_today %}
+            <div id="home-card">
+                <div class="card mx-auto" style="width: 25rem;">
+                    <img src="{% static '/images/today-match.png' %}" class="card-img-top" alt="Next match">
+                    <div class="card-body">
+                    <h5 class="card-title text-center">{{ match.team1 }} vs {{ match.team2 }}</h5>
+                    <h6 class="card-text text-center">{{ match.when }} (UTC)</h6>
+                    <p class="card-text text-center">{{ match.venue }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
 
 
 

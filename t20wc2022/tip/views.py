@@ -18,42 +18,19 @@ NOW = datetime.datetime.now()
 ### HOMEPAGE ###
 
 def home(request):
-    matches = MatchSerializer(MATCHES, many=True).data
+    # Get today's date and tomorrow's date
+    today = datetime.date.today()
+    tomorrow = datetime.date.today() + datetime.timedelta(days=1)
 
-    # Get current date and time
-    now = NOW.strftime("%Y-%m-%d")
+    # Get queryset of matches with today's date
+    match_today = MATCHES.filter(when__date=today)
 
-    # Get list of matches id with today's date
-    match_ids_today = []
-    for match in range(len(matches)):
-        if now == matches[match]["when"].split("T")[0]:
-            match_ids_today.append(match + 1)
-    print(match_ids_today)
-    
-    # Get queryset of matches with today's date using match id list
-    matches_today = []
-    for id in match_ids_today:
-        match = MATCHES.get(id=id)
-
-    ############### COME BACK TO THIS ####################
-
-    next = matches[0]
-    team1 = TEAMS.get(id=next["team1"])
-    team2 = TEAMS.get(id=next["team2"])
-    datetime = next["when"]
-    date = datetime.split("T")[0]
-    time = datetime.split("T")[1]
-    venue = VENUES.get(id=next["venue"])
+    # Get next match (if no match today)
+    match_next = MATCHES.filter(when__gt=tomorrow, when__year="2022")[0]
 
     context = {
-        "matches": matches,
-        "now": now,
-        "next": next,
-        "team1": team1,
-        "team2": team2,
-        "date": date,
-        "time": time,
-        "venue": venue,
+        "match_today": match_today,
+        "match_next": match_next,
     }
     return render(request, "home.html", context)
 
