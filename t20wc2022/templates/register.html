@@ -7,5 +7,27 @@ Register
 
 {% block content %}
 
+<h3>Register</h3>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <form id="form" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class="btn btn-danger" value="Register">
+    </form>
+</div>
+
+<br><br>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <p>Already have an account?</p>
+</div>
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <a href="{% url 'login' %}">Login</a>
+</div>
+
+
+
+
 {% endblock content %}
 

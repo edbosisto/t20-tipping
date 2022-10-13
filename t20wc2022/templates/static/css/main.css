@@ -42,6 +42,15 @@ html {
     padding-bottom: 5rem;
   }
   
+  #form {
+    max-width: 20rem;
+  }
+
+  #form-info {
+    max-width: 30rem;
+    margin-top: 2rem;
+  }
+
   #heading {
     text-align: center;
     padding: 1rem 1rem;

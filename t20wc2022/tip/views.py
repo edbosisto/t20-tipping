@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
@@ -37,7 +39,7 @@ def home(request):
 
 @login_required(login_url='login')
 def account(request):
-    return render(request, "login.html", {})
+    return render(request, "account.html", {})
 
 
 @login_required(login_url='login')
@@ -46,7 +48,37 @@ def ladder(request):
 
 
 def loginPage(request):
-    return render(request, "login.html", {})
+    # Redirect users who are already logged in away from login page.
+    if request.user.is_authenticated:
+        messages.error(request, "Already logged in...")
+        return redirect('home')
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        # Check if user exists
+        try: 
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, "User doesn't exist")
+
+        # Save and check username and password
+        user = authenticate(request, username=username, password=password)
+        # Check if user exists, then login and redirect to homepage
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Login successful")
+
+            # If user was redirected to login, return them to the page they were on
+            if 'next' in request.POST:
+                return redirect(request.POST['next'])
+            # Otherwise redirect to homepage
+            else:
+                return redirect('home')
+        else:
+            messages.error(request, "Login details incorrect")
+
+    return render(request, 'login.html', {})
 
 
 def logoutUser(request):
@@ -56,7 +88,24 @@ def logoutUser(request):
 
 
 def registerPage(request):
-    return render(request, "register.html", {})
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            messages.success(request, "Registration successful")
+            return redirect('home')
+        else:
+            messages.error(request, "An error has occured, try registration again")
+
+    context = {
+        "form": form,
+    }
+    return render(request, 'register.html', context)
 
 
 def matches(request):

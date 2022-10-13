@@ -7,5 +7,36 @@ Login
 
 {% block content %}
 
+<h3>Login</h3>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <form id="form" method="POST" action="">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Username: </label>
+            <input type="text" class="form-control" name="username" placeholder="Enter Username..." />
+
+            <label for="password" class="form-label">Password: </label>
+            <input type="password" class="form-control" name="password" placeholder="Enter Password..." />
+            
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{request.GET.next}}" />
+            {% endif %}
+                <input type="submit" class="btn btn-primary" value="Login" />
+
+        </div>
+    </form>
+
+</div>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <p>Not signed up?</p>
+</div>
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <a href="{% url 'register' %}">Create an account</a>
+</div>
+
+
+
 {% endblock content %}
 
