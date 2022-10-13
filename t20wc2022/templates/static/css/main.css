@@ -28,6 +28,16 @@ html {
     padding-top: 2rem;
   }
 
+  #card-match {
+    width: 25rem;
+    margin: 1rem 1rem;
+  }
+
+  #card-match-header {
+    background-color: rgb(206, 157, 33);
+    color: white;
+  }
+
   #content {
     padding-bottom: 5rem;
   }
@@ -47,7 +57,7 @@ html {
 
   #tip-form {
     max-width: 500px;
-    text-align: center;
+    text-align: left;
   }
   
   

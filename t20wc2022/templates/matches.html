@@ -1,11 +1,79 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Schedule
+Matches
 {% endblock title %}
 
-
 {% block content %}
+
+<h3>October</h3>
+<p class="text-center">All times in UTC</p>
+
+{% for match in matches_october %}
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="card text-center" id="card-match">
+            <div class="card-header" id="card-match-header">
+                {% if match.team1 == None %}
+                    #{{ match.id }}  TBC vs {{ match.team2 }}
+                {% elif match.team2 == None %}
+                    #{{ match.id }}  {{ match.team1 }} vs TBC
+                {% else %}
+                    #{{ match.id }}  {{ match.team1 }} vs {{ match.team2 }}
+                {% endif %}
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ match.when }}</li>
+            <li class="list-group-item">{{ match.venue }}</li>
+            </ul>
+        </div>
+    </div>
+{% endfor %}
+
+<h3>November</h3>
+
+{% for match in matches_november %}
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="card text-center" id="card-match">
+            <div class="card-header" id="card-match-header">
+                {% if match.team1 == None %}
+                    #{{ match.id }}  TBC vs {{ match.team2 }}
+                {% elif match.team2 == None %}
+                    #{{ match.id }}  {{ match.team1 }} vs TBC
+                {% else %}
+                    #{{ match.id }}  {{ match.team1 }} vs {{ match.team2 }}
+                {% endif %}
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ match.when }}</li>
+            <li class="list-group-item">{{ match.venue }}</li>
+            </ul>
+        </div>
+    </div>
+{% endfor %}
+
+<h3>Finals</h3>
+
+{% for match in finals %}
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="card text-center" id="card-match">
+            <div class="card-header" id="card-match-header">
+                {% if match.team2 == None and match.team1 == None %}
+                    #{{ match.id }}  TBC vs TBC
+                {% elif match.team2 == None %}
+                    #{{ match.id }}  {{ match.team1 }} vs TBC
+                {% elif match.team1 == None %}
+                    #{{ match.id }}  TBC vs {{ match.team2 }}
+                {% else %}
+                    #{{ match.id }}  {{ match.team1 }} vs {{ match.team2 }}
+                {% endif %}
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ match.when }}</li>
+            <li class="list-group-item">{{ match.venue }}</li>
+            </ul>
+        </div>
+    </div>
+{% endfor %}
 
 {% endblock content %}
 

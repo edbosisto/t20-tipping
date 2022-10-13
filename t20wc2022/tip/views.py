@@ -81,9 +81,20 @@ def registerPage(request):
 
 
 def matches(request):
-    matches = MatchSerializer(MATCHES, many=True).data
+    # Get matches in October
+    matches_october = MATCHES.filter(when__month="10")
 
-    context = {"matches": matches}
+    # Get matches in November, not finals
+    matches_november = MATCHES.filter(when__range=["2022-11-01", "2022-11-07"])
+
+    # Get finals only
+    finals = MATCHES.filter(when__range=["2022-11-08", "2022-11-14"])
+
+    context = {
+        "matches_october": matches_october,
+        "matches_november": matches_november,
+        "finals": finals,
+    }
     return render(request, "matches.html", context)
 
 
