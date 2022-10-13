@@ -6,22 +6,28 @@ Tips
 
 {% block content %}
 
+<h3>ENTER TIPS</h3>
+
     {% for match in matches %}
-        <form class="form-control" action="{% url 'tips' %}" method="POST" id="tip-form">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <form class="form-control" action="" method="POST" id="tip-form">
             {% csrf_token %}
-            
-            <label class="form-label" for="{{ match }}">Game {{ match.id }}: {{ match.team1 }} vs {{ match.team2 }}</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="{{ match.team1 }}">
-                    <label class="form-check-label" for="inlineRadio1">{{ match.team1 }}</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="{{ match.team2 }}">
-                    <label class="form-check-label" for="inlineRadio2">{{ match.team2 }}</label>
-                </div>
-            <button type="submit" class="btn btn-danger">Save</button>
-            
+            {% if match.team1 == None and match.team2 == None %}
+                <label class="form-label" for="{{ match }}">Game {{ match.id }}: TBC vs TBC</label>
+            {% elif match.team1 == None %}
+                <label class="form-label" for="{{ match }}">Game {{ match.id }}: TBC vs {{ match.team2 }}</label>
+            {% elif match.team2 == None %}
+                <label class="form-label" for="{{ match }}">Game {{ match.id }}: {{ match.team1 }} vs TBC</label>
+            {% else %}
+                <label class="form-label" for="{{ match }}">Game {{ match.id }}: {{ match.team1 }} vs {{ match.team2 }}</label>
+            {% endif %}
+                <label for="{{ match }}">{{ match.when }} @ {{ match.venue }}</label>
+                    <div>
+                        <button type="submit" value="{{match.team1}}" class="btn btn-secondary">{{ match.team1 }}</button>
+                        <button type="submit" value="{{match.team2}}" class="btn btn-secondary">{{ match.team2 }}</button>
+                    </div>
         </form>
+    </div>
     {% endfor %}
 
 

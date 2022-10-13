@@ -57,7 +57,8 @@ html {
 
   #tip-form {
     max-width: 500px;
-    text-align: left;
+    margin: 1rem 1rem;
+    text-align: center;
   }
   
   

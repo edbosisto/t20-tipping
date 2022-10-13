@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
@@ -13,7 +14,6 @@ MATCHES = Match.objects.all()
 VENUES = Venue.objects.all()
 TEAMS = Team.objects.all()
 
-NOW = datetime.datetime.now()
 
 ### HOMEPAGE ###
 
@@ -35,10 +35,12 @@ def home(request):
     return render(request, "home.html", context)
 
 
+@login_required(login_url='login')
 def account(request):
     return render(request, "login.html", {})
 
 
+@login_required(login_url='login')
 def ladder(request):
     return render(request, "ladder.html", {})
 
@@ -75,13 +77,7 @@ def matches(request):
     return render(request, "matches.html", context)
 
 
-def teams(request):
-    teams = TeamSerializer(TEAMS, many=True)
-
-    context = {"teams": teams}
-    return render(request, "teams.html", context)
-
-
+@login_required(login_url='login')
 def tips(request):
     form = TipForm()
     
