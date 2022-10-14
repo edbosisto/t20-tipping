@@ -182,9 +182,12 @@ def tips(request):
             obj = Tip.objects.get(user_id=user, match=match)
             obj.tip = team
             obj.save()
-        
+    
+    # Retrieve all updated tips
+    tips = Tip.objects.all()
 
     context = {
         "matches": matches,
+        "tips": tips,
     }
     return render(request, "tips.html", context)
