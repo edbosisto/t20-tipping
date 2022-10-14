@@ -19,9 +19,9 @@ def tally():
     users = User.objects.all()
     for user in users:
         # find all tips by that user and current user score
-        tips = TIPS.filter(user_id=user)
+        tips = Tip.objects.filter(user_id=user)
         # Get user score
-        score = SCORES.get(user=user).score
+        score = Score.objects.get(user=user).score
         
         # iterate through tips.
         for i in tips:
