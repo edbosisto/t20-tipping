@@ -10,22 +10,10 @@ Tips
 
     {% for match in matches %}
     <div class="h-100 d-flex align-items-center justify-content-center">
-        <form class="form-control" action="" method="POST" id="tip-form">
+        <form action="" method="POST">
             {% csrf_token %}
-            {% if match.team1 == None and match.team2 == None %}
-                <label class="form-label" for="{{ match }}">Game {{ match.id }}: TBC vs TBC</label>
-            {% elif match.team1 == None %}
-                <label class="form-label" for="{{ match }}">Game {{ match.id }}: TBC vs {{ match.team2 }}</label>
-            {% elif match.team2 == None %}
-                <label class="form-label" for="{{ match }}">Game {{ match.id }}: {{ match.team1 }} vs TBC</label>
-            {% else %}
-                <label class="form-label" for="{{ match }}">Game {{ match.id }}: {{ match.team1 }} vs {{ match.team2 }}</label>
-            {% endif %}
-                <label for="{{ match }}">{{ match.when }} @ {{ match.venue }}</label>
-                    <div>
-                        <button type="submit" value="{{match.team1}}" class="btn btn-secondary">{{ match.team1 }}</button>
-                        <button type="submit" value="{{match.team2}}" class="btn btn-secondary">{{ match.team2 }}</button>
-                    </div>
+            {{ form.as_div }}
+            <button type="submit" value="tip" class="btn btn-secondary">Save</button>
         </form>
     </div>
     {% endfor %}

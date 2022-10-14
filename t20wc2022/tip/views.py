@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 import datetime
-from .models import Team, Venue, Match
+from .models import Team, Tip, Venue, Match
 from .serializers import TeamSerializer, VenueSerializer, MatchSerializer
 from .forms import TipForm
 
@@ -15,6 +15,7 @@ from .forms import TipForm
 MATCHES = Match.objects.all()
 VENUES = Venue.objects.all()
 TEAMS = Team.objects.all()
+TIPS = Tip.objects.all()
 
 
 ### HOMEPAGE ###
@@ -44,6 +45,10 @@ def account(request):
 
 @login_required(login_url='login')
 def ladder(request):
+
+    
+
+
     return render(request, "ladder.html", {})
 
 
@@ -129,7 +134,25 @@ def matches(request):
 @login_required(login_url='login')
 def tips(request):
     form = TipForm()
-    
+
+    # Check user is logged in
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to submit tips")
+        return redirect('login')
+
+    # User submits a tip
+    if request.method == "POST":
+
+        # Get tip data
+        user = request.user
+        match_post = request.POST.get("match")
+        match = MATCHES.get(id=match_post)
+        tip = request.POST.get("tip")
+        team = TEAMS.get(id=tip)
+
+        # Save tip to database
+        Tip.objects.create(user_id=user, match=match, tip=team)
+
     context = {
         "form": form,
         "matches": MATCHES,

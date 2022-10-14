@@ -65,7 +65,7 @@ html {
   }
 
   #tip-form {
-    max-width: 500px;
+    max-width: 400px;
     margin: 1rem 1rem;
     text-align: center;
   }
@@ -78,3 +78,21 @@ html {
     bottom: 0;
     width: 100%;
   }
+
+
+  /* Tip radio buttons */
+
+input[name="radiogroup1"] {
+    display: none;
+}
+
+input[name="radiogroup1"]+label {
+    /* style passive state as you like */
+    border: 3px outset lightgrey;
+}
+
+input[name="radiogroup1"]:checked+label {
+/* style checked state as you like */
+border: 3px inset lightblue;
+background-color: aqua;
+}
