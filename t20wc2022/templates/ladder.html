@@ -20,7 +20,11 @@ Ladder
             </thead>
             <tbody>
                 {% for score in scores %}
+                {% if request.user == score.user %}
+                <tr id="user-row">
+                {% else %}
                 <tr>
+                {% endif %}
                     <td scope="row">{{ score.user }}</td>
                     <td class="text-center">{{ score.score }}</td>
                 </tr>

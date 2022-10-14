@@ -73,6 +73,11 @@ html {
     margin: 1rem 1rem;
     text-align: center;
   }
+
+  #user-row {
+    background-color: rgb(206, 157, 33);
+    color: white;
+  }
   
   
   /* Footer */
