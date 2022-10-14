@@ -39,3 +39,9 @@ class Tip(models.Model):
     tip = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="tip")
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+
+
+class Score(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
+    score = models.PositiveIntegerField(default=0)
+

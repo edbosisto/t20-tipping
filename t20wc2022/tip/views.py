@@ -6,17 +6,37 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 import datetime
-from .models import Team, Tip, Venue, Match
+from .models import Score, Team, Tip, Venue, Match
 from .serializers import TeamSerializer, VenueSerializer, MatchSerializer
 from .forms import TipForm
 
 # Create your views here.
 
-MATCHES = Match.objects.all()
-VENUES = Venue.objects.all()
-TEAMS = Team.objects.all()
-TIPS = Tip.objects.all()
 
+# Tally scores for database
+def tally():
+    # iterate through users
+    users = User.objects.all()
+    for user in users:
+        # find all tips by that user and current user score
+        tips = TIPS.filter(user_id=user)
+        # Get user score
+        score = SCORES.get(user=user).score
+        
+        # iterate through tips.
+        for i in tips:
+            # Get match and tip values
+            match = i.match
+            tip = i.tip
+
+            # Check if tip is correct
+            if tip == match.winner:
+                score += 1
+
+        # Update score in database
+        obj = Score.objects.get(user=user)
+        obj.score = score
+        obj.save()
 
 ### HOMEPAGE ###
 
@@ -26,10 +46,10 @@ def home(request):
     tomorrow = datetime.date.today() + datetime.timedelta(days=1)
 
     # Get queryset of matches with today's date
-    match_today = MATCHES.filter(when__date=today)
+    match_today = Match.objects.filter(when__date=today)
 
     # Get next match (if no match today)
-    match_next = MATCHES.filter(when__gt=tomorrow, when__year="2022")[0]
+    match_next = Match.objects.filter(when__gt=tomorrow, when__year="2022")[0]
 
     context = {
         "match_today": match_today,
@@ -45,11 +65,12 @@ def account(request):
 
 @login_required(login_url='login')
 def ladder(request):
+    scores = Score.objects.all()
 
-    
-
-
-    return render(request, "ladder.html", {})
+    context = {
+        "scores": scores,
+    }
+    return render(request, "ladder.html", context)
 
 
 def loginPage(request):
@@ -102,6 +123,10 @@ def registerPage(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
+
+            # Create database entry for Scores = 0 for new user
+            Score.objects.create(user=user, score=0)
+
             messages.success(request, "Registration successful")
             return redirect('home')
         else:
@@ -115,13 +140,13 @@ def registerPage(request):
 
 def matches(request):
     # Get matches in October
-    matches_october = MATCHES.filter(when__month="10")
+    matches_october = Match.objects.filter(when__month="10")
 
     # Get matches in November, not finals
-    matches_november = MATCHES.filter(when__range=["2022-11-01", "2022-11-07"])
+    matches_november = Match.objects.filter(when__range=["2022-11-01", "2022-11-07"])
 
     # Get finals only
-    finals = MATCHES.filter(when__range=["2022-11-08", "2022-11-14"])
+    finals = Match.objects.filter(when__range=["2022-11-08", "2022-11-14"])
 
     context = {
         "matches_october": matches_october,
@@ -134,6 +159,7 @@ def matches(request):
 @login_required(login_url='login')
 def tips(request):
     form = TipForm()
+    matches = Match.objects.all()
 
     # Check user is logged in
     if not request.user.is_authenticated:
@@ -146,15 +172,15 @@ def tips(request):
         # Get tip data
         user = request.user
         match_post = request.POST.get("match")
-        match = MATCHES.get(id=match_post)
+        match = Match.objects.get(id=match_post)
         tip = request.POST.get("tip")
-        team = TEAMS.get(id=tip)
+        team = Team.objects.get(id=tip)
 
         # Save tip to database
         Tip.objects.create(user_id=user, match=match, tip=team)
 
     context = {
         "form": form,
-        "matches": MATCHES,
+        "matches": matches,
     }
     return render(request, "tips.html", context)
