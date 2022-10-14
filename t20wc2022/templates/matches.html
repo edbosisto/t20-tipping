@@ -13,10 +13,12 @@ Matches
     <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="card text-center" id="card-match">
             <div class="card-header" id="card-match-header">
-                {% if match.team1 == None %}
-                    #{{ match.id }}  TBC vs {{ match.team2 }}
+                {% if match.team2 == None and match.team1 == None %}
+                    #{{ match.id }}  TBC vs TBC
                 {% elif match.team2 == None %}
                     #{{ match.id }}  {{ match.team1 }} vs TBC
+                {% elif match.team1 == None %}
+                    #{{ match.id }}  TBC vs {{ match.team2 }}
                 {% else %}
                     #{{ match.id }}  {{ match.team1 }} vs {{ match.team2 }}
                 {% endif %}
@@ -35,7 +37,9 @@ Matches
     <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="card text-center" id="card-match">
             <div class="card-header" id="card-match-header">
-                {% if match.team1 == None %}
+                {% if match.team1 == None and match.team2 == None %}
+                    #{{ match.id }}  TBC vs TBC
+                {% elif match.team1 == None %}
                     #{{ match.id }}  TBC vs {{ match.team2 }}
                 {% elif match.team2 == None %}
                     #{{ match.id }}  {{ match.team1 }} vs TBC

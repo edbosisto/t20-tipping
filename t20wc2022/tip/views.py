@@ -7,8 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 
 import datetime
 from .models import Score, Team, Tip, Venue, Match
-from .serializers import TeamSerializer, VenueSerializer, MatchSerializer
-from .forms import TipForm
 
 # Create your views here.
 
@@ -120,7 +118,6 @@ def registerPage(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.username.lower()
             user.save()
             login(request, user)
 
@@ -158,8 +155,9 @@ def matches(request):
 
 @login_required(login_url='login')
 def tips(request):
-    form = TipForm()
-    matches = Match.objects.all()
+    # get matches which haven't been played yet
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    matches = Match.objects.filter(when__gt=now)
 
     # Check user is logged in
     if not request.user.is_authenticated:
@@ -176,11 +174,17 @@ def tips(request):
         tip = request.POST.get("tip")
         team = Team.objects.get(id=tip)
 
-        # Save tip to database
-        Tip.objects.create(user_id=user, match=match, tip=team)
+        # Check if tip already entered. If it doesn't exist, create tip in database.
+        if not Tip.objects.filter(user_id=user, match=match):
+            Tip.objects.create(user_id=user, match=match, tip=team)
+        else:
+            # If tip exists, update
+            obj = Tip.objects.get(user_id=user, match=match)
+            obj.tip = team
+            obj.save()
+        
 
     context = {
-        "form": form,
         "matches": matches,
     }
     return render(request, "tips.html", context)
