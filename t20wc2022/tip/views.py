@@ -63,7 +63,16 @@ def home(request):
 
 @login_required(login_url='login')
 def account(request):
-    return render(request, "account.html", {})
+    # Get all tips for user and all matches
+    user = request.user
+    tips = Tip.objects.filter(user_id=user)
+    matches = Match.objects.all()
+
+    context = {
+        "tips": tips,
+        "matches": matches,
+    }
+    return render(request, "account.html", context)
 
 
 @login_required(login_url='login')

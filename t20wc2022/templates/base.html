@@ -48,6 +48,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ms-auto">
 
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="">{% now "j F Y H:i" %} UTC</a>
+            </li>
+
             <!-- Account navigation dropdown -->
             {% if request.user.is_authenticated %}
             <li class="nav-item dropdown">
@@ -124,17 +128,17 @@
           <!-- Section: Social media -->
           <section class="mb-1">
             <!-- Facebook -->
-            <a
+            <!-- <a
               class="btn btn-link btn-floating btn-lg text-dark m-1"
               href="#!"
               role="button"
               data-mdb-ripple-color="dark"
-              ><i class="bi bi-facebook"></i></a>
+              ><i class="bi bi-facebook"></i></a> -->
       
             <!-- Twitter -->
             <a
               class="btn btn-link btn-floating btn-lg text-dark m-1"
-              href="#!"
+              href="https://twitter.com/edbosisto"
               role="button"
               data-mdb-ripple-color="dark"
               ><i class="bi bi-twitter"></i
@@ -152,7 +156,7 @@
             <!-- Instagram -->
             <a
               class="btn btn-link btn-floating btn-lg text-dark m-1"
-              href="#!"
+              href="https://www.instagram.com/edbosisto/"
               role="button"
               data-mdb-ripple-color="dark"
               ><i class="bi bi-instagram"></i

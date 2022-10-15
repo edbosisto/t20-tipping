@@ -13,7 +13,7 @@ Tips
             <div id="tip-div">
                 <form method="POST">
                     {% csrf_token %}
-                    <div>
+                    <b><div>
                         {% if match.team1 == None and match.team2 == None %}
                         <label class="form-label" for="tip">#{{ match.id }}  TBC vs TBC</label>
                         {% elif match.team1 == None %}
@@ -23,18 +23,20 @@ Tips
                         {% else %}
                         <label class="form-label" for="tip">#{{ match.id }}  {{ match.team1 }} vs {{ match.team2 }}</label>
                         {% endif %}
-                    </div>
+                    </div></b>
                     <div>
                         <label class="form-label" for="tip" >{{ match.when }} @ {{ match.venue }}</label>
                     </div>
                     <div>
                         <input type="hidden" name="match" value="{{ match.id }}">
-                        <select class="form-select" name="tip" id="form-select">
-                            <option value="" disabled selected>-- choose --</option>
-                            <option value="{{ match.team1.id }}">{{ match.team1 }}</option>
-                            <option value="{{ match.team2.id }}">{{ match.team2 }}</option>
-                        </select>
-                        <button type="submit" class="btn btn-secondary">Save</button>
+                        <div class="h-100 d-flex align-items-center justify-content-center">
+                            <select class="form-select" name="tip" id="tip-select">
+                                <option value="" disabled selected>-- choose --</option>
+                                <option value="{{ match.team1.id }}">{{ match.team1 }}</option>
+                                <option value="{{ match.team2.id }}">{{ match.team2 }}</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="tip-button">Save</button>
                     </div>
                 </form>
             </div>
@@ -42,13 +44,25 @@ Tips
         {% for tip in tips %}
             {% if tip.match == match %}
                 <div class="h-100 d-flex align-items-center justify-content-center">
-                    <p>Tipped: {{ tip.tip }}</p>
+                    <div id="tip-div-choice">
+                        Tipped: {{ tip.tip }}
+                    </div>
                 </div>
             {% endif %}
         {% endfor %}
-        
 
     {% endfor %}
 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+    </script>
 
 {% endblock content %}
