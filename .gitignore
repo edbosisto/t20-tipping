@@ -3,3 +3,7 @@ env/
 
 # Files
 t20wc2022/t20wc2022/settings.py
+
+# Django stuff:
+*.log
+local_settings.py
