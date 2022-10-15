@@ -35,6 +35,9 @@ html {
     padding-top: 2rem;
   }
 
+  #button-login {
+    margin-top: 5px;
+  }
   #card-account {
     width: 25rem;
   }
