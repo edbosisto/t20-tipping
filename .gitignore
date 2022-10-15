@@ -2,7 +2,8 @@
 env/
 
 # Files
-t20wc2022/t20wc2022/settings.py
+# t20wc2022/t20wc2022/settings.py
+django-secret-key.txt
 
 # Django stuff:
 *.log
