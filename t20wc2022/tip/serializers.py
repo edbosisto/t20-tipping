@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import Team, Venue, Match
 
 
+# Serializers not needed
 class TeamSerializer(ModelSerializer):
     class Meta:
         model = Team
