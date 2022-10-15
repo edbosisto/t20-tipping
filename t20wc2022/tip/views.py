@@ -18,8 +18,8 @@ def tally():
     for user in users:
         # find all tips by that user and current user score
         tips = Tip.objects.filter(user_id=user)
-        # Get user score
-        score = Score.objects.get(user=user).score
+        # Set score to 0
+        score = 0
         
         # iterate through tips.
         for i in tips:
@@ -31,10 +31,15 @@ def tally():
             if tip == match.winner:
                 score += 1
 
-        # Update score in database
-        obj = Score.objects.get(user=user)
-        obj.score = score
-        obj.save()
+        # Check current user score in database
+        user_score = Score.objects.get(user=user).score
+
+        # if user_score hasn't changed, don't update database
+        if user_score != score:
+            # Update score in database
+            obj = Score.objects.get(user=user)
+            obj.score = score
+            obj.save()
 
 ### HOMEPAGE ###
 
@@ -63,6 +68,10 @@ def account(request):
 
 @login_required(login_url='login')
 def ladder(request):
+    # Tally user scors
+    tally()
+
+    # Get current scores
     scores = Score.objects.all()
 
     context = {
@@ -164,6 +173,10 @@ def tips(request):
         messages.error(request, "You must be logged in to submit tips")
         return redirect('login')
 
+    # Get existing tips for user
+    user = request.user
+    tips = Tip.objects.filter(user_id=user)
+
     # User submits a tip
     if request.method == "POST":
 
@@ -172,7 +185,16 @@ def tips(request):
         match_post = request.POST.get("match")
         match = Match.objects.get(id=match_post)
         tip = request.POST.get("tip")
+        if not tip:
+            messages.error(request, "Don't click save for matches you haven't tipped")
+
         team = Team.objects.get(id=tip)
+
+        # Check if match has already occured (in case user left browser open)
+        tip_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if not Match.objects.filter(id=match_post, when__gt=tip_time):
+            messages.error(request, "That match has already started")
+            return redirect('tips')
 
         # Check if tip already entered. If it doesn't exist, create tip in database.
         if not Tip.objects.filter(user_id=user, match=match):
@@ -183,8 +205,9 @@ def tips(request):
             obj.tip = team
             obj.save()
     
-    # Retrieve all updated tips
-    tips = Tip.objects.all()
+    # Retrieve all updated tips by the user
+    tips = Tip.objects.filter(user_id=user)
+    print(tips)
 
     context = {
         "matches": matches,

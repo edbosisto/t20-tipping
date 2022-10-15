@@ -73,6 +73,10 @@ html {
     margin: 30px;
   }
 
+  #tip-div {
+    padding-top: 20px;
+  }
+
   #tip-form {
     max-width: 400px;
     margin: 1rem 1rem;
