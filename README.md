@@ -13,18 +13,18 @@ Users compete against each other on the "ladder", which shows all users' total c
 
 ### Layout:
 
-####### Homepage
+##### Homepage
 Homepage displays a simple button directing users to either login or (if logged in,) input their tips.
 Below is a card displaying details for either the next match, or all matches scheduled for that day.
 
-###### Account
+##### Account
 The user can review all their saved tips here.
 
-###### Tips
+##### Tips
 Users visit /tip to input their choices for all matches. If a match has already begun/finished, they will not be available for tipping.
 Teams in some of the later matches in the competition are determined by knockout as the competition progresses, indicated by TBC. TBC cannot be selected as a tip.
 
-###### Ladder
+##### Ladder
 A ladder of all users and their total correct tips. As matches are completed, user scores are updated automatically according to the match results.
 
 ##### Matches
