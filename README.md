@@ -42,7 +42,7 @@ Contains main Django app files
   - Custom form to take user tips. Not used in final deployment.
 ###### models.py
   - Relational database models.
-    - Team, Venue, Match, Tip, Score
+    - Team, Venue, Match, Tip, Score. See Database below for more information.
 ###### serializers.py
   - Serializers for Team, Venue, Match models. Not used in final deployment.
 ###### urls.py
@@ -63,3 +63,21 @@ Contains main Django app files
     - tips (login required)
   - Tally() function to tally all user scores and update "score" table in database.
     - User class imported from Django.contrib.auth.models. Loops through all users, checking user tips against match winners. Score is tallied, then checked against current user score in database. Updated if score has changed. Tally() runs every time /ladder is viewed.
+
+
+### Database structure
+Sqlite3 database built into Django framework. Models (tables) as follows.
+##### Team
+  - Basic details for all teams in the world cup.
+##### Venue
+  - Basic details for all venues to host a match during the world cup (all in Australia).
+##### Match
+  - team1, team2. Foreign keys from Team table.
+  - when. Timestamp, UTC, for match time and date.
+  - venue. Foreign key from Venue table.
+  - winner. Foreign key from Team table.
+##### Tip
+  - 
+##### Score
+  - 
+  
