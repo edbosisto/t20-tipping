@@ -37,7 +37,7 @@ Users compete against each other on the "ladder", which shows all users' total c
 ### tip Folder
 Contains main Django app files
 ###### admin.py
-  - All database models registered. To be viewed and edited in the /admin panel
+  - All database models registered. To be viewed and edited in the /admin panel.
 ###### forms.py
   - Custom form to take user tips. Not used in final deployment.
 ###### models.py
@@ -54,13 +54,24 @@ Contains main Django app files
     - account (login required)
       - Logged in user can see a summary of their currently saved tips. User, Tip and Match classes used to determine user's current saved tips.
     - ladder (login required)
-      - Tally() function (see below) determines all users' total scores (# correct tips). Score table from database is rendered in template.
+      - Tally() function (see below) determines all users' total scores (# correct tips). Score table from database is rendered in template once it's been updated by Tally().
     - loginPage
-      - 
+      - Basic user login, making use of Django's User model. Redirects with error message if already logged in. User inputs are checked and user is logged in with success message if authenticated.
     - logoutUser
+      - Makes use of Django's logout() function to log out a user and redirect to the homepage.
     - registerPage
+      - UserCreationForm (Django default) is rendered for new users to sign up. Django handles all password protection. Successful registration redirects to homepage with success message.
     - matches
+      - all matches from Match table filtered according to what month they occur (October or November) and rendered to a template.
     - tips (login required)
+      - filters matches which have already occured using Datetime library.
+      - check user is logged in.
+      - Get's existing tips for current user from database.
+      - When user submits a new tip, form data is retrieved. 
+        - Error message and redirect if no team is chosen.
+        - Backend check if game has already started / finished. This is to prevent users cheating by leaving the browser open and submitting a tip once the result is known.
+        - Check if tip has already been submitted by that user for that match. If exists, update. If doesn't exist, create new entry.
+      - Finally, retrieve all tips by current user (again) to update page after a tip is submitted.
   - Tally() function to tally all user scores and update "score" table in database.
     - User class imported from Django.contrib.auth.models. Loops through all users, checking user tips against match winners. Score is tallied, then checked against current user score in database. Updated if score has changed. Tally() runs every time /ladder is viewed.
 
@@ -77,7 +88,11 @@ Sqlite3 database built into Django framework. Models (tables) as follows.
   - venue. Foreign key from Venue table.
   - winner. Foreign key from Team table.
 ##### Tip
-  - 
+  - user_id. Foreign key from Django's User model.
+  - match. Foreign key from Match table.
+  - tip. Foreign key from Team table.
+  - created and updated timestamps.
 ##### Score
-  - 
+  - user - Foreign key from Django's User model.
+  - score - integer field to keep track of user score.
   
