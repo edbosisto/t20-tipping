@@ -1,6 +1,6 @@
 # T20 Cricket World Cup Tipping Competition
 
-#### Video Demo: youtu.be/5MZWWCkBKIg
+#### Video Demo: https://youtu.be/5MZWWCkBKIg
 
 A web app built for the CS50 final project, by Ed Bosisto.
 
