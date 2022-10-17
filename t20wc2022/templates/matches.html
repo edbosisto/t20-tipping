@@ -32,6 +32,16 @@ Matches
             </ul>
         </div>
     </div>
+
+    {% if match.winner != None %}
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div id="match-div-winner">
+                Winner: {{ match.winner }}
+            </div>
+        </div>
+    {% endif %}
+
+
 {% endfor %}
 
 <h3>November</h3>

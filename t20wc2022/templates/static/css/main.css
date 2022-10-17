@@ -44,7 +44,7 @@ html {
 
   #card-match {
     width: 25rem;
-    margin: 1rem 1rem;
+    margin-top: 1rem;
   }
 
   #card-match-header {
@@ -79,6 +79,14 @@ html {
     padding-top: 3rem;
   }
 
+  #match-div-winner {
+    background-color: var(--br-green);
+    color: white;
+    margin: 0px 20px 0px 20px;
+    width: 25rem;
+    text-align: center;
+  }
+  
   #table {
     max-width: 400px;
     margin: 30px;
