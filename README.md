@@ -6,7 +6,7 @@ A web app built for the CS50 final project, by Ed Bosisto.
 
 ### Overview:
 Built with Python Django Framework and Sqlite3 backend.
-Templates and bootstrap UX/UI.
+Django templating and Bootstrap 5.2.2 for UX/UI.
 The app allows users to register and login with a username and password. 
 Users can then "tip" or guess the results of all matches which will be played for the 2022 T20 Cricket World Cup.
 Users compete against each other on the "ladder", which shows all users' total correct tips as the competition progresses.
