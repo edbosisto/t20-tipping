@@ -31,3 +31,16 @@ Users compete against each other on the "ladder", which shows all users' total c
     - Default Django register form for new users. Username, and password confirmation required.
   - tips
     - Logged in users can see a full list of matches, in chronological order, for the T20 Cricket World Cup. If a match has started or has already finished it will not appear in the list for tipping. Users can see their currently saved tip below each match. Tips can be updated by saving a different choice. After each tip is saved, Javascript autoscrolls to the user's last position on the page. This is a UX choice made by me so the user doesn't need to scroll back to their previous position after each selection.
+    
+#### tip folder
+Contains main app files
+###### forms.py
+- 
+###### models.py
+- 
+###### serializers.py
+- 
+###### urls.py
+- 
+###### views.py
+- 
