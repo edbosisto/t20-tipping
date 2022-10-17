@@ -31,21 +31,35 @@ Users compete against each other on the "ladder", which shows all users' total c
     - Default Django register form for new users. Username, and password confirmation required.
   - tips
     - Logged in users can see a full list of matches, in chronological order, for the T20 Cricket World Cup. If a match has started or has already finished it will not appear in the list for tipping. Users can see their currently saved tip below each match. Tips can be updated by saving a different choice. After each tip is saved, Javascript autoscrolls to the user's last position on the page. This is a UX choice made by me so the user doesn't need to scroll back to their previous position after each selection.
+  - static Folder
+    - Contains images, css and js folders with static files.
     
 ### tip Folder
-Contains main app files
+Contains main Django app files
 ###### admin.py
-  - All database models registered so they can be viewed and edited in the /admin panel
+  - All database models registered. To be viewed and edited in the /admin panel
 ###### forms.py
   - Custom form to take user tips. Not used in final deployment.
 ###### models.py
   - Relational database models.
     - Team, Venue, Match, Tip, Score
 ###### serializers.py
-  - Serializers for Team, Venue, Match models. Not used in final deployment
+  - Serializers for Team, Venue, Match models. Not used in final deployment.
 ###### urls.py
   - Routing patterns for all pages.
 ###### views.py
   - Functional views used to render all pages. 
-    - home, account (login required), ladder (login required), loginPage, logoutUser, registerPage, matches, tips (login required)
+    - home
+      - Datetime library used to determine next match from match table in database. Next match and Today's match is determined by filtering django querysets on their "when" field, and sent to template for render.
+    - account (login required)
+      - Logged in user can see a summary of their currently saved tips. User, Tip and Match classes used to determine user's current saved tips.
+    - ladder (login required)
+      - Tally() function (see below) determines all users' total scores (# correct tips). Score table from database is rendered in template.
+    - loginPage
+      - 
+    - logoutUser
+    - registerPage
+    - matches
+    - tips (login required)
   - Tally() function to tally all user scores and update "score" table in database.
+    - User class imported from Django.contrib.auth.models. Loops through all users, checking user tips against match winners. Score is tallied, then checked against current user score in database. Updated if score has changed. Tally() runs every time /ladder is viewed.
