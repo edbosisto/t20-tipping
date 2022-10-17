@@ -195,7 +195,8 @@ def tips(request):
         match = Match.objects.get(id=match_post)
         tip = request.POST.get("tip")
         if not tip:
-            messages.error(request, "Don't click save for matches you haven't tipped")
+            messages.error(request, "No team chosen")
+            return redirect('tips')
 
         team = Team.objects.get(id=tip)
 
