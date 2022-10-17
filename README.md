@@ -34,13 +34,15 @@ Users compete against each other on the "ladder", which shows all users' total c
     
 #### tip folder
 Contains main app files
+###### admin.py
+  - 
 ###### forms.py
-- 
+  - 
 ###### models.py
-- 
+  - 
 ###### serializers.py
-- 
+  - 
 ###### urls.py
-- 
+  - 
 ###### views.py
-- 
+  - 
